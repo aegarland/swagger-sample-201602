@@ -1,2 +1,8 @@
+com\aegarland\restexample\dao\UserDaoImpl.class
 com\aegarland\restexample\entity\User.class
+com\aegarland\restexample\provider\JacksonJsonParamConverterProvider$1.class
+com\aegarland\restexample\service\UserServiceImpl.class
+com\aegarland\restexample\provider\JacksonJsonParamConverterProvider.class
+com\aegarland\restexample\dao\UserDao.class
+com\aegarland\restexample\api\UserEndPoint.class
 com\aegarland\restexample\service\UserService.class
