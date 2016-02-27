@@ -5,19 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.xml.bind.annotation.XmlAccessOrder;
-import javax.xml.bind.annotation.XmlAccessorOrder;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @Table(name = "USER", schema = "PUBLIC", catalog = "PUBLIC")
 @ApiModel
-@XmlRootElement
-@XmlAccessorOrder(XmlAccessOrder.ALPHABETICAL)
 public class User {
 
 	    @Column(name = "FIRST_NAME", unique = false, nullable = true, length = 64)
@@ -69,16 +65,5 @@ public class User {
 	 
 	    public void setImage(byte[] avatar) {
 	        this.image = avatar;
-	    }	    
-	    
-	    public static User fromString (String string){
-	    	System.out.println("fromString("+string+")");
-	    	(new Exception("bar")).printStackTrace();
-	    	User u = new User();
-	    	u.setId(31L);
-	    	u.firstName = "X";
-	    	u.lastName = "Man";
-	    	return u;
 	    }
-
 	}

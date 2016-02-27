@@ -19,7 +19,6 @@ import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,6 +71,7 @@ public class UserEndPoint {
 			@ApiResponse(code = 409, message = "User exists with the passed in id", response = User.class) })
 	public Response insertUser(@ApiParam(name = "user", value = "user object", required = true) User user,
 			                   @Context UriInfo ui) throws JSONException, IOException {
+		//could use injected UriInfo instead
 		return service.insertUser(user, UriBuilder.fromResource(getClass()));
 	}
 

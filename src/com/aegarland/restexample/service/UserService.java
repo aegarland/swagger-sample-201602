@@ -1,9 +1,10 @@
 package com.aegarland.restexample.service;
 
 import java.io.IOException;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
-import javax.ws.rs.core.UriInfo;
+
 import org.json.JSONException;
 
 import com.aegarland.restexample.entity.User;

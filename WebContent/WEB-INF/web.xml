@@ -29,10 +29,6 @@
 			<param-name>jersey.config.server.tracing.type</param-name>
 			<param-value>ALL</param-value>
 		</init-param>
-<!-- 		<init-param>
-            <param-name>jersey.config.server.provider.packages</param-name>
-            <param-value>com.aegarland.restexample.provider</param-value>
-        </init-param> -->
         <init-param>
             <param-name>jersey.config.server.provider.classnames</param-name>
             <param-value>org.glassfish.jersey.filter.LoggingFilter</param-value>
