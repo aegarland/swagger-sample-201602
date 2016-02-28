@@ -1,8 +1,0 @@
-com\aegarland\restexample\dao\UserDaoJpaImpl.class
-com\aegarland\restexample\entity\User.class
-com\aegarland\restexample\provider\JacksonJsonParamConverterProvider$1.class
-com\aegarland\restexample\provider\JacksonJsonParamConverterProvider.class
-com\aegarland\restexample\api\UserResource.class
-com\aegarland\restexample\dao\UserDao.class
-com\aegarland\restexample\service\UserService.class
-com\aegarland\restexample\service\UserServiceJacksonImpl.class
