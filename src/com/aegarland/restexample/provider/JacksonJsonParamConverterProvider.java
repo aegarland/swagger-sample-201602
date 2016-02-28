@@ -17,7 +17,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Provider
-// from http://blog.dejavu.sk/2014/02/11/inject-custom-java-types-via-jax-rs-parameter-annotations/
+/** this class is not needed (maven dependency on jackson-jaxrs-json-provider)
+
+ see http://blog.dejavu.sk/2014/02/11/inject-custom-java-types-via-jax-rs-parameter-annotations/
+ for discussion of Json -> POJO for parameters (this comes directly from there)
+ */
 public class JacksonJsonParamConverterProvider implements ParamConverterProvider {
 
     @Context
