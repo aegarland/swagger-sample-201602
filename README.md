@@ -11,5 +11,5 @@ It was built with the modest goal of building an alternative example to the pet 
 * Persistance layer right now is
    * JPA via eclipselink with Local transactions
    * In-memory HSQL
-   
+
 This allows to easily do "realistic" test of all CRUD operations in the swagger UI.  I suppose it could be the basis for doing front-end unit integration tests.
