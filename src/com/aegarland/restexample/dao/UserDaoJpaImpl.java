@@ -7,11 +7,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.aegarland.restexample.entity.User;
 
-@Component
+@Repository
 public class UserDaoJpaImpl implements UserDao {
 
 	@PersistenceContext

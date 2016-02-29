@@ -19,7 +19,7 @@ import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.aegarland.restexample.entity.User;
@@ -34,7 +34,7 @@ import io.swagger.annotations.ResponseHeader;
 
 @Path("/user")
 @Api(value = "/user", description = "CRUD operations for users")
-@Component
+@Controller
 public class UserResource {
 
 	@Autowired
