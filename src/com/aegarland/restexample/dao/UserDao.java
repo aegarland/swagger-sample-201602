@@ -1,19 +1,18 @@
 package com.aegarland.restexample.dao;
 
-import java.io.IOException;
 import java.util.List;
+
+import org.springframework.data.repository.Repository;
 
 import com.aegarland.restexample.entity.User;
 
-public interface UserDao {
+public interface UserDao extends Repository<User,Long> {
 
-	public List<User> getUsers() throws IOException;
+	public List<User> findAll();
 
-	public User getUser(long id) throws IOException;
+	public User findOne(Long id);
 
-	public boolean insertUser(User user) throws IOException;
+	public <S extends User> S save(S user);
 
-	public boolean updateUser(long id, User user) throws IOException;
-
-	public boolean deleteUser(long id) throws IOException;
+	public void delete(Long id);
 }

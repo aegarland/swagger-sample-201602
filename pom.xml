@@ -4,7 +4,7 @@
 	<groupId>com.aegarland.example</groupId>
 	<name>Rest Example using Jersey and HyperSQL</name>
 	<artifactId>rest</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<packaging>war</packaging>
 	<properties>
 		<spring.version>4.2.5.RELEASE</spring.version>
@@ -13,15 +13,12 @@
 		<jersey.media.groupid>org.glassfish.jersey.media</jersey.media.groupid>
 		<jersey.containers.groupid>org.glassfish.jersey.containers</jersey.containers.groupid>
 		<jersey.version>2.22.2</jersey.version>
+		<hibernate.core.version>5.1.0.Final</hibernate.core.version>
+		<jboss.logging.version>3.3.0.Final</jboss.logging.version>
+		<sl4j.version>1.7.18</sl4j.version>
+		<log4j.version>2.5</log4j.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-
-	<repositories>
-		<repository>
-			<id>eclipselink</id>
-			<url>http://www.eclipse.org/downloads/download.php?r=1&amp;nf=1&amp;file=/rt/eclipselink/maven.repo/</url>
-		</repository>
-	</repositories>
 
 	<build>
 		<finalName>RestExample</finalName>
@@ -125,6 +122,10 @@
 					<groupId>org.springframework</groupId>
 					<artifactId>spring-beans</artifactId>
 				</exclusion>
+				<exclusion>
+					<artifactId>bean-validator</artifactId>
+					<groupId>org.glassfish.hk2.external</groupId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
@@ -153,19 +154,49 @@
 			<version>${spring.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
+			<version>1.11.4.RELEASE</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.9.4.RELEASE</version>
+		</dependency>
+		<dependency>
 			<groupId>org.hsqldb</groupId>
 			<artifactId>hsqldb</artifactId>
 			<version>2.3.3</version>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>eclipselink</artifactId>
-			<version>2.1.1</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.core.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.eclipse.persistence</groupId>
-			<artifactId>javax.persistence</artifactId>
-			<version>2.1.1</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.core.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>${jboss.logging.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${sl4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>${log4j.version}</version>
 		</dependency>
 	</dependencies>
 </project>

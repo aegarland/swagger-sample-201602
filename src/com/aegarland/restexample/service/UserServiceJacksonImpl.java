@@ -10,6 +10,7 @@ import javax.ws.rs.core.UriBuilder;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.aegarland.restexample.dao.UserDao;
 import com.aegarland.restexample.entity.User;
@@ -35,7 +36,7 @@ public class UserServiceJacksonImpl implements UserService {
 		Writer w = new StringWriter();
 		User[] users = new User[0];
 		try {
-			users = userDao.getUsers().toArray(users);
+			users = userDao.findAll().toArray(users);
 		} catch (Throwable t) {
 			// TODO log this or take some other more sensible action
 			return Response.serverError().entity(t.getMessage()).build();
@@ -47,29 +48,31 @@ public class UserServiceJacksonImpl implements UserService {
 
 	@Override
 	public Response getUser(long id) throws JSONException, IOException {
-
 		User user = null;
-
 		try {
-			user = userDao.getUser(id);
-		} catch (Throwable e) {
-			// TODO log this or take some other more sensible action
-		}
-		if (user != null) {
-			Writer w = new StringWriter();
-			factory.createGenerator(w).writeObject(user);
+			user = userDao.findOne(id);
 
-			return Response.ok(toJSON(user)).build();
+			if (user != null) {
+				Writer w = new StringWriter();
+				factory.createGenerator(w).writeObject(user);
+
+				return Response.ok(toJSON(user)).build();
+			}
+			return Response.status(Response.Status.NOT_FOUND).build();
+		} catch (Throwable t) {
+			return Response.serverError().entity(toJSON(user)).build();
 		}
-		return Response.status(Response.Status.NOT_FOUND).build();
 	}
 
 	@Override
 	public Response insertUser(User user, UriBuilder builder) throws JSONException, IOException {
+		Assert.isTrue(user.getId() > 0L, "Client must set the ID");
 		try {
-			if (!userDao.insertUser(user)) {
+			User user1 = userDao.findOne(user.getId());
+			if (user1 != null) {
 				return Response.status(Response.Status.CONFLICT).entity(toJSON(user)).build();
 			}
+			user = userDao.save(user);
 		} catch (Throwable t) {
 			return Response.serverError().entity(toJSON(user)).build();
 		}
@@ -80,10 +83,17 @@ public class UserServiceJacksonImpl implements UserService {
 
 	@Override
 	public Response updateUser(long id, User user) throws JSONException, IOException {
+		Assert.isTrue(id == user.getId(), "Id passed in does not match object id");
+		User user1 = null;
+
 		try {
-			if (!userDao.updateUser(id, user)) {
+			user1 = userDao.findOne(id);
+
+			if (user1 == null) {
 				return Response.status(Response.Status.NOT_FOUND).entity(toJSON(user)).build();
 			}
+
+			userDao.save(user);
 		} catch (Throwable t) {
 			return Response.serverError().entity(toJSON(user)).build();
 		}
@@ -93,10 +103,16 @@ public class UserServiceJacksonImpl implements UserService {
 
 	@Override
 	public Response deleteUser(long id) throws JSONException, IOException {
+		User user1 = null;
+
 		try {
-			if (!userDao.deleteUser(id)) {
+			user1 = userDao.findOne(id);
+
+			if (user1 == null) {
 				return Response.status(Response.Status.NOT_FOUND).build();
 			}
+
+			userDao.delete(id);
 		} catch (Throwable t) {
 			return Response.serverError().build();
 		}

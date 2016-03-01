@@ -41,6 +41,7 @@ public class UserResource {
 	private UserService service;
 	
 	@GET
+	@Transactional(readOnly = true)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "return a list of all users", notes = "too many results")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful conversion", response = User[].class) })
@@ -50,6 +51,7 @@ public class UserResource {
 
 	@Path("{id}")
 	@GET
+	@Transactional(readOnly = true)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "return user object based on passed in user id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful insert", response = User.class),
