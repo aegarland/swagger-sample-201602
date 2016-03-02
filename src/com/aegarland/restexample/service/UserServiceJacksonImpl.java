@@ -9,6 +9,8 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -16,6 +18,8 @@ import com.aegarland.restexample.dao.UserDao;
 import com.aegarland.restexample.entity.User;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.google.common.collect.Iterables;
 
 @Service
 public class UserServiceJacksonImpl implements UserService {
@@ -24,7 +28,7 @@ public class UserServiceJacksonImpl implements UserService {
 
 	{
 		factory.enable(JsonGenerator.Feature.QUOTE_FIELD_NAMES);
-		factory.enable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
+		factory.enable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);		
 		factory.setCodec(new com.fasterxml.jackson.databind.ObjectMapper(factory));
 	}
 
@@ -32,11 +36,11 @@ public class UserServiceJacksonImpl implements UserService {
 	private UserDao userDao;
 
 	@Override
-	public Response getUsers() throws JSONException, IOException {
+	public Response getUsers(PageRequest request) throws JSONException, IOException {
 		Writer w = new StringWriter();
-		User[] users = new User[0];
+		User[] users = null;
 		try {
-			users = userDao.findAll().toArray(users);
+			users = Iterables.toArray(userDao.findAll(request), User.class);
 		} catch (Throwable t) {
 			// TODO log this or take some other more sensible action
 			return Response.serverError().entity(t.getMessage()).build();

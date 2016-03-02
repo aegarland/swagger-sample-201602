@@ -2,15 +2,19 @@ package com.aegarland.restexample.api;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
+import java.util.Set;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -19,6 +23,8 @@ import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,17 +47,24 @@ public class UserResource {
 	private UserService service;
 	
 	@GET
-	@Transactional(readOnly = true)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "return a list of all users", notes = "too many results")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful conversion", response = User[].class) })
-	public Response getUsers() throws JSONException, IOException {
-		return service.getUsers();
+	public Response getUsers(@ApiParam(required=false,name="page",value="zero-based page number") @DefaultValue("0") @QueryParam("page") Integer page,
+			@ApiParam(required=false,defaultValue="10",value="page size") @QueryParam("size") Integer size,
+            @ApiParam(required=false,allowMultiple=true,allowableValues="id,firstName,lastName") @QueryParam("sort") List<String> sort,
+            @ApiParam(required=false,defaultValue="ASC") @QueryParam("direction") Sort.Direction direction 
+            ) throws JSONException, IOException {
+		return service.getUsers(new PageRequest(
+                page==null?0:page.intValue(),
+                size==null?10:size.intValue(),
+                direction==null? Sort.Direction.ASC : direction, //Sort.Direction.fromString(direction),
+                sort==null||sort.isEmpty()?new String[]{"id"}:sort.toArray(new String[0])
+        ));
 	}
 
 	@Path("{id}")
 	@GET
-	@Transactional(readOnly = true)
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(value = "return user object based on passed in user id")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "Successful insert", response = User.class),

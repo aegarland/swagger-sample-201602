@@ -14,6 +14,7 @@ import javax.ws.rs.ext.Providers;
 import javax.ws.rs.ext.ContextResolver;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Provider
@@ -45,6 +46,9 @@ public class JacksonJsonParamConverterProvider implements ParamConverterProvider
 
         final ObjectMapper mapper = contextResolver != null ?
                 contextResolver.getContext(rawType) : new ObjectMapper();
+                
+        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT,true);
+        (new Exception("custom converter")).printStackTrace();
 
         // Create ParamConverter.
         return new ParamConverter<T>() {

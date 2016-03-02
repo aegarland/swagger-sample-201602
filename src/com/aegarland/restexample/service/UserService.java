@@ -6,12 +6,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
 import org.json.JSONException;
+import org.springframework.data.domain.PageRequest;
 
 import com.aegarland.restexample.entity.User;
 
 public interface UserService {
 
-	public Response getUsers() throws JSONException, IOException;
+	public Response getUsers(PageRequest request) throws JSONException, IOException;
 
 	public Response getUser(long id) throws JSONException, IOException;
 
