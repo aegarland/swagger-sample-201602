@@ -22,6 +22,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
  see http://blog.dejavu.sk/2014/02/11/inject-custom-java-types-via-jax-rs-parameter-annotations/
  for discussion of Json -> POJO for parameters (this comes directly from there)
+ 
+ When this class was attempted to be used, it failed to parse query parameters, so I
+ assume it is out of date (not the use of deprecated method below as well).
  */
 public class JacksonJsonParamConverterProvider implements ParamConverterProvider {
 
@@ -47,8 +50,7 @@ public class JacksonJsonParamConverterProvider implements ParamConverterProvider
         final ObjectMapper mapper = contextResolver != null ?
                 contextResolver.getContext(rawType) : new ObjectMapper();
                 
-        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT,true);
-        (new Exception("custom converter")).printStackTrace();
+        mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT,true);        
 
         // Create ParamConverter.
         return new ParamConverter<T>() {
